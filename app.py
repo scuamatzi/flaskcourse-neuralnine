@@ -8,9 +8,13 @@ def index():
     return "Hello World!!"
 
 
-@app.route("/hello")
+@app.route("/hello", methods=["get", "POST"])
 def hello():
-    return "Hello Friend!!"
+    if request.method == "GET":
+        return "You made a GET request...\n"
+    else:
+        return "You made a POST request\n", 201
+    # return "Hello Friend!!"
 
 
 @app.route("/greet/<name>")
