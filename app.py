@@ -1,43 +1,43 @@
-from flask import Flask, request
+from flask import Flask, render_template, redirect, url_for
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
+
+
+@app.template_filter("reverse_string")
+def reverse_string(data):
+    return data[::-1]
+
+
+@app.template_filter("repeat")
+def repeat(data, times=2):
+    return data * times
+
+
+@app.template_filter("alternate_case")
+def alternate_case(data):
+    return "".join([c.upper() if i % 2 == 0 else c.lower() for i, c in enumerate(data)])
 
 
 @app.route("/")
 def index():
-    return "Hello World!!"
+    title = "Flask course"
+    description = "NeuralNine course from Novice to Advanced"
+    ages_list = [25, 8, 35, 9, 11, 27, 42, 6, 59, 24]
+    return render_template(
+        "index.html", title=title, description=description, ages_list=ages_list
+    )
 
 
-@app.route("/hello", methods=["get", "POST"])
-def hello():
-    if request.method == "GET":
-        return "You made a GET request...\n"
-    else:
-        return "You made a POST request\n", 201
-    # return "Hello Friend!!"
+@app.route("/filters")
+def filters():
+    data = "Lorem ipsum"
+    return render_template("filters.html", data=data)
 
 
-@app.route("/greet/<name>")
-def greet(name):
-    return f"Hello {name}"
-
-
-@app.route("/add/<int:number1>/<int:number2>")
-def add(number1, number2):
-    return f"{number1} + {number2} = {number1 + number2} "
-
-
-@app.route("/handle_params")
-def handle_params():
-    # return str(request.args)
-    if "name" in request.args.keys() and "surname" in request.args.keys():
-        name = request.args["name"]
-        surname = request.args["surname"]
-        return f"Hello {name} {surname}"
-    else:
-        return "Some arguments are missing!!"
+@app.route("/redirect_endpoint")
+def redirect_endpoint():
+    return redirect(url_for("filters"))
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5555, debug=True)
-    # app.run(debug=True)

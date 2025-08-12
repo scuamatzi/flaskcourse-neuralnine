@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+Filters
+{% endblock %}
+
+
+{% block content %}
+  <h1>Filters</h1>
+  <p> {{ data }} </p>
+  <p> {{ data|upper }} </p>
+  <p> {{ data|lower }} </p>
+  <p> {{ data|title }} </p>
+  <p> {{ data|replace("m", "M") }} </p>
+  <p> {{ data|reverse_string }} </p>
+  <p> {{ data|repeat }} </p>
+  <p> {{ data|repeat(5) }} </p>
+  <p> {{ data|alternate_case }} </p>
+{% endblock %}
