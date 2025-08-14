@@ -2,19 +2,19 @@
 
 {% block title %}
 Index Page
-{% endblock title %}
+{% endblock %}
 
 {% block content %}
+  <h1>Hello World!!</h1>
+<form method="POST" action="{{ url_for("index") }}" >
+    <input type="text" name="username" value="" placeholder="Username"> <br>
+    <input type="password" name="password" value="" placeholder="password"> <br>
+    <input type="submit" name="" value="Login">
+  </form>
 
-    <h1>{{ title }}</h1>
-    <p> {{description}} </p>
-    <h2>Ages list</h2>
-
-    <ul>
-      {% for item in ages_list %}
-      <li {% if item>=30 %} style="color:red" {% endif %} > {{item}} </li>
-      {% endfor %}
-    </ul>
-
-    <a href="{{ url_for("filters") }}">Filters</a>
-{% endblock content %}
+ <h1>File Upload</h1>
+  <form method="POST" action="{{ url_for("file_upload") }}" enctype="multipart/form-data" >
+    <input type="file" name="file" accept="text/plain" value="" required="required">
+    <input type="submit" name="" value="Upload file">
+  </form>
+{% endblock %}
