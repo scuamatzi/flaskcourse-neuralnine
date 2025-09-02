@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>
       {% block title %}
         Default Page
@@ -11,21 +12,8 @@
     <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
-    {% block header %}
-    {% endblock %}
-
-    {% with messages = get_flashed_messages()  %}
-      {% if messages %}
-        <ul>
-          {% for message in messages %}
-            <li> {{ message }} </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    
-    {% endwith %}
-
     {% block content %}
     {% endblock %}
+  
   </body>
 </html>

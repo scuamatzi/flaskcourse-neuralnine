@@ -5,7 +5,24 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="special">Hello World!!</h1>
+  <p> {{ message }} </p>
 
-  <img src="/img/logo.png" alt="Text">
+  <a href="{{ url_for("set_data") }}">Set session data</a>
+  <br/>
+  <a href="{{ url_for("get_data") }}">Get session data</a>
+  <br/>
+  <a href="{{ url_for("clear_session") }}">Clear session data</a>
+  <br/>
+  <a href="{{ url_for("set_cookie") }}">Set cookie</a>
+  <br/>
+  <a href="{{ url_for("get_cookie") }}">Get cookie</a>
+  <br/>
+  <a href="{{ url_for("remove_cookie") }}">Remove cookie</a>
+  <br/>
+  <a href="{{ url_for("login") }}">Login</a>
+
+{% endblock %}
+
+{% block header %}
+  <h1>Session Management</h1>
 {% endblock %}
