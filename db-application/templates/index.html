@@ -8,7 +8,9 @@
   <h1>Index Page</h1>
   <ul>
     {% for person in people %}
-      <li> {{ person }} </li>
+    <li> {{ person }} <button type="" onclick="deletePerson({{ person.pid }})"> Delete </button>
+      <a href="{{ url_for("details", pid=person.pid) }}">Details</a>
+    </li>
     {% endfor %} 
   </ul>
 
@@ -19,5 +21,22 @@
     <input type="text" name="job" value="" placeholder="Job"><br>
     <input type="submit" name="" value="Create">
   </form>
+
+  <script>
+    function deletePerson(pid){
+      fetch("{{ url_for("delete", pid=pid) }}" + pid,{
+        method: "DELETE"
+      }).then(response=>{
+        if(response.ok){
+          window.location.reload();
+        }
+        else{
+          console.error("Failed to delete item with pid: ", pid);
+        }
+      }).catch(error=>{
+        console.error("Error during fetching: ", error)
+      });
+    }
+  </script>
 
 {% endblock %}
