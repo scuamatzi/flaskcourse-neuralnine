@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
 
@@ -10,13 +12,24 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./testdb.db"
     # Postgresql example
     # app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:postgres@localhost:5432/testdb"
+    app.secret_key = "lowkey"
 
     db.init_app(app)
 
-    # import later on
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    from models import User
+
+    @login_manager.user_loader
+    def load_user(uid):
+        return User.query.get(uid)
+
+    bcrypt = Bcrypt(app)
+
     from routes import register_routes
 
-    register_routes(app, db)
+    register_routes(app, db, bcrypt)
 
     migrate = Migrate(app, db)
     return app
